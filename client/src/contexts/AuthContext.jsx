@@ -52,8 +52,15 @@ export function AuthProvider({ children }) {
     localStorage.setItem('user', JSON.stringify(userData));
   };
 
+  const refreshProfile = useCallback(async () => {
+    const profile = await authService.getProfile();
+    setUser(profile);
+    localStorage.setItem('user', JSON.stringify(profile));
+    return profile;
+  }, []);
+
   return (
-    <AuthContext.Provider value={{ user, loading, login, register, logout, updateUser }}>
+    <AuthContext.Provider value={{ user, loading, login, register, logout, updateUser, refreshProfile }}>
       {children}
     </AuthContext.Provider>
   );

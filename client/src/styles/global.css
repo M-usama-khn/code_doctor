@@ -347,6 +347,32 @@ input, select, textarea { font-family: var(--font); }
 .file-meta { font-size: 11px; color: var(--text2); }
 .status-dot { width: 7px; height: 7px; border-radius: 50%; }
 
+/* Upload page layout */
+.upload-page { width: 100%; }
+.upload-page-inner { width: 100%; max-width: 100%; }
+
+/* Profile */
+.profile-page { max-width: 720px; width: 100%; }
+.profile-photo-btn { margin-left: auto; flex-shrink: 0; }
+
+.user-avatar-img {
+  object-fit: cover;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+
+.s-avatar.user-avatar-img {
+  width: 32px;
+  height: 32px;
+  border: 1px solid var(--blue);
+}
+
+.prof-avatar-big.user-avatar-img {
+  width: 72px;
+  height: 72px;
+  border: 2px solid var(--blue);
+}
+
 /* Upload */
 .upload-zone {
   border: 2px dashed var(--border2);
@@ -681,6 +707,87 @@ input, select, textarea { font-family: var(--font); }
 ::-webkit-scrollbar { width: 5px; height: 5px; }
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 99px; }
+
+.prof-avatar-big.user-avatar-img {
+  width: 72px;
+  height: 72px;
+  border: 2px solid var(--blue);
+}
+
+/* Avatar crop modal */
+.crop-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.65);
+  z-index: 10000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.crop-modal {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 420px;
+  overflow: hidden;
+  box-shadow: 0 8px 32px var(--shadow);
+}
+
+.crop-modal-hd {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.crop-modal-title { font-size: 14px; font-weight: 600; color: var(--text); }
+
+.crop-modal-close {
+  background: none;
+  border: none;
+  color: var(--text2);
+  font-size: 16px;
+  padding: 4px;
+  cursor: pointer;
+}
+
+.crop-modal-close:hover { color: var(--text); }
+
+.crop-modal-body {
+  position: relative;
+  height: 320px;
+  background: var(--bg);
+}
+
+.crop-modal-controls {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 14px 20px 4px;
+}
+
+.crop-zoom-slider {
+  flex: 1;
+  accent-color: var(--blue);
+}
+
+.crop-modal-hint {
+  text-align: center;
+  font-size: 11px;
+  color: var(--text3);
+  padding: 6px 16px 0;
+}
+
+.crop-modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  padding: 14px 16px 16px;
+}
 
 @media (max-width: 900px) {
   .metrics-grid { grid-template-columns: repeat(2, 1fr); }

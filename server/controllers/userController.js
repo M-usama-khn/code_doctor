@@ -1,5 +1,6 @@
 import bcrypt from 'bcryptjs';
 import pool from '../config/db.js';
+import { deleteAvatarFile } from '../middleware/upload.js';
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 const RIPHAH_RE = /@(riphah\.edu\.pk|students\.riphah\.edu\.pk)$/i;
@@ -11,6 +12,8 @@ function formatUser(row) {
     sapId: row.sap_id,
     email: row.email,
     role: row.role,
+    avatar: row.avatar || null,
+    createdAt: row.created_at,
   };
 }
 
@@ -52,6 +55,30 @@ export async function updateProfile(req, res) {
   } catch (err) {
     console.error('Update profile error:', err);
     res.status(500).json({ message: 'Server error' });
+  }
+}
+
+export async function uploadAvatar(req, res) {
+  try {
+    if (!req.file) {
+      return res.status(400).json({ message: 'No image file provided' });
+    }
+
+    const [rows] = await pool.query('SELECT avatar FROM users WHERE id = ?', [req.user.id]);
+    if (!rows.length) {
+      return res.status(404).json({ message: 'User not found' });
+    }
+
+    const avatarPath = `/uploads/avatars/${req.file.filename}`;
+    deleteAvatarFile(rows[0].avatar);
+
+    await pool.query('UPDATE users SET avatar = ? WHERE id = ?', [avatarPath, req.user.id]);
+
+    const [updated] = await pool.query('SELECT * FROM users WHERE id = ?', [req.user.id]);
+    res.json({ message: 'Profile photo updated successfully', user: formatUser(updated[0]) });
+  } catch (err) {
+    console.error('Upload avatar error:', err);
+    res.status(500).json({ message: err.message || 'Server error' });
   }
 }
 

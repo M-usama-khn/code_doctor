@@ -24,3 +24,23 @@ export async function changePassword(currentPassword, newPassword, confirmPasswo
   const { data } = await api.put('/user/password', { currentPassword, newPassword, confirmPassword });
   return data;
 }
+
+export async function uploadAvatar(file) {
+  const token = localStorage.getItem('token');
+  const formData = new FormData();
+  formData.append('avatar', file, file.name || 'avatar.jpg');
+
+  const response = await fetch('/api/user/avatar', {
+    method: 'POST',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+    body: formData,
+  });
+
+  const data = await response.json().catch(() => ({}));
+  if (!response.ok) {
+    const error = new Error(data.message || 'Failed to upload photo');
+    error.response = { data, status: response.status };
+    throw error;
+  }
+  return data;
+}

@@ -20,6 +20,8 @@ function formatUser(row) {
     sapId: row.sap_id,
     email: row.email,
     role: row.role,
+    avatar: row.avatar || null,
+    createdAt: row.created_at,
   };
 }
 

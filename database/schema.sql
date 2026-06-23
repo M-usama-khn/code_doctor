@@ -8,5 +8,6 @@ CREATE TABLE IF NOT EXISTS users (
   email      VARCHAR(150) NOT NULL UNIQUE,
   password   VARCHAR(255) NOT NULL,
   role       ENUM('Developer', 'Reviewer', 'Administrator') DEFAULT 'Developer',
+  avatar     VARCHAR(255) NULL,
   created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );

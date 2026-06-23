@@ -1,5 +1,7 @@
 import { NavLink, useNavigate } from 'react-router-dom';
-import { NAV_ITEMS, getInitials } from '../../utils/constants';
+import { NAV_ITEMS } from '../../utils/constants';
+import { getRoleLabel } from '../../utils/userHelpers';
+import UserAvatar from '../common/UserAvatar';
 import { useAuth } from '../../contexts/AuthContext';
 import { useToast } from '../../contexts/ToastContext';
 
@@ -42,10 +44,10 @@ export default function Sidebar() {
         ))}
       </nav>
       <div className="sidebar-user">
-        <div className="s-avatar">{getInitials(user?.fullName)}</div>
+        <UserAvatar user={user} />
         <div>
           <div className="s-user-name">{user?.fullName}</div>
-          <div className="s-user-role">SAP {user?.sapId} · {user?.role}</div>
+          <div className="s-user-role">SAP {user?.sapId} · {getRoleLabel(user?.role)}</div>
         </div>
         <button className="s-logout" onClick={handleLogout} title="Logout" type="button">
           <i className="fas fa-arrow-right-from-bracket" />
